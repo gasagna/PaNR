@@ -24,7 +24,8 @@ public:
         _op._x = _op._z.head();                           // then copy initial nonlinear state
         _op._l(op._x, dest, 0, _op._z.tail(1));           // then propagate
         if (_is_last_rank)                                // only apply if needed
-            static_for(_op._s, [&](auto& s) { s(dest); }) // apply all shifts
+            static_for_enum(_op._s,
+                [&](auto i, auto& s) { s(dest, _op._z.tail(i)); }) // apply all shifts
     }
 };
 
