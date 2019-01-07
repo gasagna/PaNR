@@ -5,7 +5,7 @@
 namespace PaNr {
 
 template <typename L, typename X>
-class LinOpExec {
+class LinOperatorExec {
 private:
     LinOperator<L, X>& _op;           // actual operator
     X&                 _y;            // linearised state to be mapped
@@ -13,7 +13,7 @@ private:
 
 public:
     // constructor
-    LinOpExec(LinOperator<L, X>& op, X& _y, const bool is_last_rank)
+    LinOperatorExec(LinOperator<L, X>& op, X& _y, const bool is_last_rank)
         : _op(op)
         , _y(y)
         , _is_last_rank(is_last_rank) {}
@@ -46,12 +46,12 @@ public:
         , _x(z.head()) {} // makes copy from z
 
     // lazy dot product
-    LinOpExec<L, X> operator*(const X& y) {
+    LinOperatorExec<L, X> operator*(const X& y) {
         bool is_last_rank = _z.dinfo().rank() == _z.dinfo().comm_size() - 1;
         return { *this, y, is_last_rank }
     }
 
-    // allow LinOpExec to access the provate data in here
-    friend class LinOpExec;
+    // allow LinOperatorExec to access the provate data in here
+    friend class LinOperatorExec;
 };
 }
