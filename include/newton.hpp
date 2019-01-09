@@ -39,8 +39,8 @@ void search(GT&            G, // nonlinear propagator
             DVector<X, 2>& z,
             Options        opts = Options()) {
     opts.method == "linesearch"
-        ? _search_ls(G, L, S, std::tuple_cat(std::tie(F), DS), z, opts)
-        : _search_hs(G, L, S, std::tuple_cat(std::tie(F), DS), z, opts);
+        ? _search_ls(G, L, S, std::tie(F, DS), z, opts)
+        : _search_hs(G, L, S, std::tie(F, DS), z, opts);
 }
 
 }
