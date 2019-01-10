@@ -15,14 +15,14 @@ double error_norm_lambda(GT&                  G,
                          ST&                  S,
                          double               lambda,
                          DVector<X, NBORDER>& z,
-                         DVector<X, NBORDER>& y,
+                         DVector<X, NBORDER>& dz,
                          DVector<X, NBORDER>& tmp) {
     // understand where we are
     auto i = z.dinfo().this_rank();
     auto N = z.dinfo().comm_size();
 
     // Set initial state. This also performs the arithmetic on the tail
-    tmp = z + lambda * y;
+    tmp = z + lambda * dz;
 
     // propagate by T/N
     G(tmp.head(), 0, tmp.tail(0) / N);
